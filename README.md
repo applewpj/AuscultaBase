@@ -1,5 +1,4 @@
 # AuscultaBase
-Official Repository of **<AuscultaBase: A Foundational Step Towards AI-Powered Body Sound Diagnostics>**
 
 ### Model Checkpoint
 
