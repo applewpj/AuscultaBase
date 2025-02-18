@@ -212,27 +212,12 @@ class LinearHead(pl.LightningModule):
     def record_metrics(self, y, predicted, probs):
         if "precision" in self.recorded_metrics:
             precision = precision_score(y, predicted, average="macro")
-            if self.task == "classification":
-                result_classes = list(set(y.tolist()))
-                all_classes = torch.arange(self.n_classes).tolist()
-                missing_classes = [i for i in all_classes if i not in result_classes]
-                precision = precision * len(all_classes) / (len(all_classes)-len(missing_classes))
-            elif self.task == "multilabel":
-                pass
             self.current_recorded_metrics["precision"] = precision
             self.best_recorded_metrics["precision"] = max(self.best_recorded_metrics["precision"], self.current_recorded_metrics["precision"])
             self.log("precision", self.current_recorded_metrics["precision"])
             self.log("best_precision", self.best_recorded_metrics["precision"])
         if "recall" in self.recorded_metrics:
             recall = recall_score(y, predicted, average="macro")
-            if self.task == "classification":
-                result_classes = list(set(y.tolist()))
-                all_classes = torch.arange(self.n_classes).tolist()
-                missing_classes = [i for i in all_classes if i not in result_classes]
-                recall = recall * len(all_classes) / (len(all_classes)-len(missing_classes))
-            elif self.task == "multilabel":
-                pass
-
             self.current_recorded_metrics["recall"] = recall
             self.best_recorded_metrics["recall"] = max(self.best_recorded_metrics["recall"], self.current_recorded_metrics["recall"] )
             self.log("recall", self.current_recorded_metrics["recall"] )
